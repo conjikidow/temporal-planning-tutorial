@@ -1,0 +1,6 @@
+[files]
+exclude = ["uv.lock"]
+
+[format]
+[format.rules]
+line-width = 120

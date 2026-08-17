@@ -1,0 +1,37 @@
+name: Bump Version
+
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+permissions: {}
+
+jobs:
+
+  bump-version:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: conjikidow/bump-version-action@f3a9763279155551196c80dab1c1891cbc51df9f # v4.0.2
+        with:
+          label-major: 'update::major'
+          label-minor: 'update::minor'
+          label-patch: 'update::patch'
+          manual-bump-type: ${{ inputs.bump_type }}
+          labels-to-add: 'automated,versioning'
+          create-release: 'true'
