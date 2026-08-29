@@ -71,7 +71,7 @@ repos:
       - id: uv-lock
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: 93c7b51d860138c34a0613756c0151209b88d56f  # frozen: v4.17.0
+    rev: d910b66e2686a3ef6c3f438dec0f63ba3cf8d7ee  # frozen: v4.18.0
     hooks:
       - id: commitizen
       - id: commitizen-branch
