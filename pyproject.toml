@@ -11,10 +11,10 @@ dev = [
   "prek>=0.3.0",
   { include-group = "lint" },
 ]
-lint = ["ruff==0.16.0"]
+lint = ["ruff==0.16.4"]
 
 [tool.ruff]
-required-version = "==0.16.0"
+required-version = "==0.16.4"
 target-version = "py313"
 line-length = 120
 
