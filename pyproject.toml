@@ -1,0 +1,25 @@
+[project]
+name = "temporal-planning-tutorial"
+version = "0.1.0"
+description = "A hands-on tutorial for temporal automated planning with PDDL 2.1, Unified Planning, and Aries"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT OR Apache-2.0"
+license-files = ["LICENSE-APACHE", "LICENSE-MIT"]
+dependencies = [
+  "unified-planning==1.3.0",
+  "up-aries==0.5.0",
+]
+
+[dependency-groups]
+lint = ["ruff==0.16.4"]
+
+[tool.ruff]
+required-version = "==0.16.4"
+target-version = "py311"
+line-length = 120
+# `scripts/` is a source root: the scripts import `model` as a sibling module, not a third-party one.
+src = ["scripts"]
+
+[tool.uv]
+exclude-newer = "3 days"
