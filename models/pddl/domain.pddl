@@ -16,6 +16,9 @@
     (camera-free)
     (processor-free)
     (transmitter-free)
+
+    ;; Environment state. Orbital geometry decides this, not the satellite, so no action ever claims or releases it.
+    (primary-visible)  ; the high-rate ground station is in view
   )
 
   ;; Point the satellite at a target and take an image.
@@ -47,11 +50,29 @@
     )
   )
 
-  ;; Transmit the processed product of one target to the ground.
-  ;; The satellite carries a single transmitter.
+  ;; Transmit the processed product of one target over the high-rate link.
+  ;; This is fast, but it only works while the primary ground station is in view.
   (:durative-action downlink
     :parameters (?t - target)
     :duration (= ?duration 3)
+    :condition (and
+      (at start (transmitter-free))
+      (over all (processed ?t))
+      (over all (primary-visible))
+    )
+    :effect (and
+      (at start (not (transmitter-free)))
+      (at end (transmitter-free))
+      (at end (downlinked ?t))
+    )
+  )
+
+  ;; Transmit the same product over the low-rate backup link, which is always reachable.
+  ;; It needs no ground station in view, and takes three times as long.
+  ;; Both links share the one transmitter.
+  (:durative-action downlink-backup
+    :parameters (?t - target)
+    :duration (= ?duration 9)
     :condition (and
       (at start (transmitter-free))
       (over all (processed ?t))

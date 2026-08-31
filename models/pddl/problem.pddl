@@ -12,6 +12,9 @@
     (camera-free)
     (processor-free)
     (transmitter-free)
+
+    ;; The primary ground station is in view for this planning horizon.
+    (primary-visible)
   )
 
   (:goal (and
