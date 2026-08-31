@@ -11,9 +11,10 @@
   (:init
     (camera-free)
     (processor-free)
+    (transmitter-free)
   )
 
   (:goal (and
-    (processed target-a)
+    (downlinked target-a)
   ))
 )
