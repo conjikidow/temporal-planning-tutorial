@@ -19,15 +19,20 @@
   )
 
   ;; Point the satellite at a target and take an image.
+  ;; The camera is claimed at start and released at end, so two observations cannot overlap.
   (:durative-action observe
     :parameters (?t - target)
     :duration (= ?duration 5)
-    :condition (over all (camera-free))
-    :effect (at end (imaged ?t))
+    :condition (at start (camera-free))
+    :effect (and
+      (at start (not (camera-free)))
+      (at end (camera-free))
+      (at end (imaged ?t))
+    )
   )
 
   ;; Turn a raw image into a downlinkable product.
-  ;; The processor is claimed at start and released at end.
+  ;; The processor is claimed at start and released at end, so two runs cannot overlap.
   (:durative-action process
     :parameters (?t - target)
     :duration (= ?duration 2)
