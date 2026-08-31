@@ -16,5 +16,6 @@
 
   (:goal (and
     (downlinked target-a)
+    (downlinked target-b)
   ))
 )

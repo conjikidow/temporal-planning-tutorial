@@ -46,19 +46,15 @@
   ;; The satellite carries a single transmitter.
   (:durative-action downlink
     :parameters (?t - target)
-
-    ;; TODO(step 1): a transmission takes 3 time units.
-    :duration (= ?duration todo-duration)
-
-    ;; TODO(step 1): two conditions are needed.
-    ;;   - the transmitter must be free when the transmission starts
-    ;;   - the processed product of ?t must exist for the whole transmission
-    :condition (and (at start (todo-conditions)))
-
-    ;; TODO(step 1): three effects are needed.
-    ;;   - claim the transmitter at start
-    ;;   - release the transmitter at end
-    ;;   - record at end that the product of ?t has reached the ground
-    :effect (and (at end (todo-effects)))
+    :duration (= ?duration 3)
+    :condition (and
+      (at start (transmitter-free))
+      (over all (processed ?t))
+    )
+    :effect (and
+      (at start (not (transmitter-free)))
+      (at end (transmitter-free))
+      (at end (downlinked ?t))
+    )
   )
 )
